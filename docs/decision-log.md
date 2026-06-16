@@ -5,8 +5,13 @@
 **Decision:** Use CLAUDE.md + skills directory pattern (Option B: project memory / CLAUDE.md pattern).
 
 **Rationale:**
-1. Claude Code v2.1.177 auto-discovers `CLAUDE.md` in the project root — no manual loading needed.
-2. Skills in `skills/` directory are slash-invocable via `/skill-name`.
+1. Claude Code auto-discovers `CLAUDE.md` in the project root — no manual loading needed.
+2. A `SKILL.md` with YAML frontmatter (`name` + `description`) placed under
+   `.claude/skills/<name>/` is slash-invocable via `/<name>`.
+   NOTE (corrected 2026-06-16): the original scaffold put the skill at a bare
+   `skills/<name>/SKILL.md` with no frontmatter, which Claude Code does NOT discover, so
+   `/pedantic-engineer` never worked. The skill now lives at
+   `.claude/skills/pedantic-engineer/SKILL.md`, has frontmatter, and is self-contained.
 3. No external dependencies (no MCP server, no plugin, no npm package).
 4. Portable: copy the repo into any project and CLAUDE.md is immediately active.
 5. Versionable: the entire skill lives in git, can be updated independently.
@@ -18,7 +23,7 @@
 - **D. MCP prompt/server scaffold:** Overkill for a prompt-based persona. Requires running server.
 - **E. Portable repo:** This is what we deliver — a portable repo that uses B as the activation mechanism.
 
-**Final Choice:** B + A combined. CLAUDE.md for auto-discovery, `skill/` directory for the canonical artifacts, `skills/pedantic-engineer/` for slash-invocable skill.
+**Final Choice:** B + A combined. CLAUDE.md for auto-discovery, `skill/` directory for the canonical reference artifacts, and `.claude/skills/pedantic-engineer/SKILL.md` (frontmatter, self-contained) for the slash-invocable skill.
 
 ## Assumptions Made
 

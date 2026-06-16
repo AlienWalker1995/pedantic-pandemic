@@ -8,11 +8,15 @@ A private, portable repo that packages a prompt-based capability. When loaded in
 
 ## How to Use with Claude Code
 
-### Option 1: CLAUDE.md (Recommended)
-Place this repo (or just `CLAUDE.md`) in your project root. Claude Code auto-discovers it.
+### Option 1: Slash-command skill (Recommended)
+Copy the `.claude/skills/pedantic-engineer/` directory into your project's `.claude/skills/`
+folder (or into `~/.claude/skills/` for all projects). Claude Code discovers the `SKILL.md`
+via its YAML frontmatter and makes it invocable as `/pedantic-engineer`. The shipped
+`SKILL.md` is self-contained — no other files are required for it to work.
 
-### Option 2: Slash Command
-Copy `skill/system-prompt.md` into a `skills/pedantic-engineer/` directory in your project. Claude Code resolves it via `/pedantic-engineer`.
+### Option 2: CLAUDE.md project memory
+Place this repo (or just `CLAUDE.md`) in your project root. Claude Code auto-discovers
+`CLAUDE.md` and loads it as project memory in every session.
 
 ### Option 3: System Prompt
 ```bash
@@ -50,7 +54,7 @@ See `examples/` for real-world inputs and the skill's pedantic responses:
 
 ## Adapting for a Team
 
-1. Copy `skill/` directory into your project's `skills/` folder
+1. Copy `.claude/skills/pedantic-engineer/` into your project's `.claude/skills/` folder
 2. Customize `skill/question-framework.md` for your team's common task types
 3. Add team-specific examples to `examples/`
 4. Update `evals/test-cases.md` with your domain's adversarial prompts
@@ -60,6 +64,8 @@ See `examples/` for real-world inputs and the skill's pedantic responses:
 
 ```
 pedantic-engineer/
+  .claude/skills/pedantic-engineer/
+    SKILL.md             # The invocable /pedantic-engineer skill (self-contained, has frontmatter)
   CLAUDE.md              # Auto-loaded project memory
   README.md              # This file
   .gitignore
@@ -80,7 +86,7 @@ pedantic-engineer/
     test-cases.md        # 12+ test cases
     golden-examples.md   # 5 canonical outputs
   scripts/
-    validate.sh          # File/heading checks
+    validate.sh          # Skill-loadability + file/heading checks
   examples/
     vague-feature-request.md
     ambiguous-bug-report.md
