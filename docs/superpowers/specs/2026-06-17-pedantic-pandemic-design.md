@@ -14,6 +14,12 @@ The defining behavior is volume by design: the team asks an obscene number of
 questions and keeps generating more after every answer, owning the annoyance as the
 point — surfacing every hidden assumption before work begins.
 
+**Non-negotiable: every question must be a *good* question.** The volume comes from
+genuinely exhaustive coverage and deepening — never from padding, restating, or
+generic templates. A flood of mediocre questions buries the signal and is the
+failure mode this tool must avoid. Quality is the gate; volume is the result of
+applying it across many real dimensions. See "What makes a good question" below.
+
 ## Roles (3 invocable skills)
 
 | Skill (slug) | Role | Organizing question | Domain |
@@ -36,7 +42,33 @@ protocol when invoked as the team).
 3. **No cure:** never declare "enough." Stop only when the user explicitly says "stop / proceed / just build it / that's enough."
 4. **On forced stop:** emit a final **"Assumptions I'm forced to make"** block (each assumption + what changes if it's wrong) plus remaining open unknowns.
 5. **Running state:** maintain Answered / Open / Assumptions / Contradictions across rounds.
-6. **Quality bar (so volume ≠ noise):** every question must be specific, bounded, decision-relevant, and non-redundant. Exhaustive, not random.
+6. **Quality gate (so volume ≠ noise):** before emitting any round, each question must pass the bar in "What makes a good question" below. Drop the ones that fail rather than padding the count. Exhaustive, not random.
+
+## What makes a "good question" (the hard bar)
+
+This is the heart of the tool. Volume is worthless without it. Every question — in
+the first round and every follow-up — must pass all five tests; if it fails any,
+cut it (do not soften the bar to hit a number):
+
+1. **Decision-changing** — a different answer would change what we build, how, scope, or whether we build it at all. If the answer changes nothing, it's noise.
+2. **Specific & bounded** — has a finite, concrete answer space. "What outcome should be true when done?" not "tell me about the requirements."
+3. **Non-redundant** — not already answerable from what the user said or the surrounding context, and not a restatement of an answered question.
+4. **Assumption-exposing** — ideally surfaces a hidden assumption, conflict, edge case, or unstated constraint the user hasn't considered — not a fact they obviously know.
+5. **Earned (follow-ups only)** — probes a real ambiguity or risk that the *previous answer* opened up; not a generic next-item that ignores what was just said.
+
+**Where the volume legitimately comes from:** breadth across many genuinely distinct
+dimensions (product, UX, technical, edge cases, metrics, ops, …) and depth (drilling
+into the specifics each answer reveals). Coverage and deepening — not repetition.
+
+**Banned even at maximum volume (the failure mode):**
+- Generic boilerplate with no grounding in this request ("what's the timeline?" with nothing behind it).
+- Anything answerable from what the user already said.
+- Multi-part mush (bundle of 3 questions in one); ask them separately or cut.
+- Leading/rhetorical questions, or questions whose only purpose is to inflate the count.
+- Re-asking, rephrasing, or near-duplicates of answered questions.
+
+Each role's SKILL.md states this bar explicitly and instructs a self-filter pass:
+*generate candidates, then drop every candidate that fails a test before showing the round.*
 
 ## `pedantic-pm` question domains
 
