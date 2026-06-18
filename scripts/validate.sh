@@ -25,32 +25,37 @@ check_heading() {
     fi
 }
 
-echo "=== Pedantic Engineer Validation ==="
+echo "=== The Pedantic Pandemic — Validation ==="
+
+check_skill() {
+    local slug="$1"
+    local skill=".claude/skills/$slug/SKILL.md"
+    echo "• /$slug"
+    if [ ! -f "$skill" ]; then
+        fail "MISSING skill: $skill — /$slug will not exist"; return
+    fi
+    ok "present: $skill"
+    if [ "$(head -n 1 "$skill")" = "---" ]; then
+        ok "YAML frontmatter opens on line 1"
+    else
+        fail "$slug: does not start with '---' — Claude Code will NOT discover it"
+    fi
+    local fm; fm="$(awk 'NR>1 && /^---[[:space:]]*$/{exit} NR>1{print}' "$skill")"
+    echo "$fm" | grep -q '^name:[[:space:]]*\S' && ok "$slug: frontmatter has name:" || fail "$slug: frontmatter missing name:"
+    echo "$fm" | grep -q '^description:[[:space:]]*\S' && ok "$slug: frontmatter has description:" || fail "$slug: frontmatter missing description:"
+    local body_lines; body_lines="$(awk 'c==2{print} /^---[[:space:]]*$/{c++}' "$skill" | grep -c '[^[:space:]]')"
+    if [ "${body_lines:-0}" -ge 30 ]; then
+        ok "$slug: self-contained body ($body_lines non-blank lines)"
+    else
+        fail "$slug: body too thin ($body_lines lines) — likely a pointer stub"
+    fi
+}
 
 echo ""
 echo "--- Skill loadability (the part that actually matters) ---"
-SKILL=".claude/skills/pedantic-engineer/SKILL.md"
-if [ -f "$SKILL" ]; then
-    ok "skill present at canonical location: $SKILL"
-    # Frontmatter must start on line 1 and contain name + description.
-    if [ "$(head -n 1 "$SKILL")" = "---" ]; then
-        ok "YAML frontmatter opens on line 1"
-    else
-        fail "SKILL.md does not start with '---' — Claude Code will NOT discover it"
-    fi
-    fm="$(awk 'NR>1 && /^---[[:space:]]*$/{exit} NR>1{print}' "$SKILL")"
-    echo "$fm" | grep -q '^name:[[:space:]]*\S' && ok "frontmatter has name:" || fail "frontmatter missing name:"
-    echo "$fm" | grep -q '^description:[[:space:]]*\S' && ok "frontmatter has description:" || fail "frontmatter missing description:"
-    # The skill body should be self-contained, not just a pointer to another file.
-    body_lines="$(awk 'c==2{print} /^---[[:space:]]*$/{c++}' "$SKILL" | grep -c '[^[:space:]]')"
-    if [ "${body_lines:-0}" -ge 30 ]; then
-        ok "skill body is self-contained ($body_lines non-blank lines)"
-    else
-        fail "skill body too thin ($body_lines lines) — likely a pointer stub, not a working skill"
-    fi
-else
-    fail "MISSING skill: $SKILL — the /pedantic-engineer command will not exist"
-fi
+for slug in pedantic-engineer pedantic-pm pedantic-team; do
+    check_skill "$slug"
+done
 
 echo ""
 echo "--- Supporting files ---"
@@ -60,13 +65,15 @@ check_file ".gitignore"
 for f in overview decision-log assumptions design-principles usage-patterns; do
     check_file "docs/$f.md"
 done
-for f in system-prompt behavior-spec question-framework refusal-and-assumption-policy examples; do
+for f in system-prompt behavior-spec question-framework refusal-and-assumption-policy examples \
+         pm-question-bank interrogation-protocol; do
     check_file "skill/$f.md"
 done
 for f in rubric test-cases golden-examples; do
     check_file "evals/$f.md"
 done
-for f in vague-feature-request ambiguous-bug-report under-specified-refactor architecture-review; do
+for f in vague-feature-request ambiguous-bug-report under-specified-refactor architecture-review \
+         pm-vague-feature team-combined-interrogation; do
     check_file "examples/$f.md"
 done
 

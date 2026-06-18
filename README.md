@@ -1,18 +1,33 @@
-# pedantic-engineer
+# The Pedantic Pandemic 🦠
 
-A reusable Claude Code skill repository for "The Pedantic Engineer" — a persona that asks pedantic, high-signal clarifying questions before doing work.
+> An outbreak of questions you can't escape. Patient zero: your half-baked request. Symptoms: 40 questions and rising. There is no cure, only answers.
+
+A reusable Claude Code skill repository: a **team of pedantic personas** that interrogate a request — relentlessly — *before* any work starts, so every hidden assumption is surfaced first.
+
+## The roster
+
+| Skill | Role | Organizing question | Asks about |
+|---|---|---|---|
+| `/pedantic-engineer` | Engineer | *"Why does this matter **technically**?"* | implementation: data shapes, coupling, edge cases, backward-compat, testing, ops |
+| `/pedantic-pm` | Product Manager | *"Why does this matter **in the market and for users**?"* | **product + UX** |
+| `/pedantic-team` | Team lead (orchestrator) | all of the above, combined | fires **Engineering + Product + UX** at once |
+
+**Core behavior** (PM + team): *Relentless Rounds* — open with a big batch, generate new deeper follow-ups after every answer, never declare "enough" until you say *stop*, then emit a forced-assumptions block.
+
+**The one rule:** only **good** questions. Volume comes from breadth + depth, never padding — every question must be decision-changing, specific, non-redundant, and assumption-exposing. A flood of mediocre questions is the failure mode. (`skill/interrogation-protocol.md`)
 
 ## What This Is
 
-A private, portable repo that packages a prompt-based capability. When loaded into any Claude Code session, it surfaces ambiguity, asks sharp questions, and improves engineering precision before execution.
+A private, portable repo that packages prompt-based capabilities. Loaded into any Claude Code session, the team surfaces ambiguity and sharpens a request before execution.
 
 ## How to Use with Claude Code
 
-### Option 1: Slash-command skill (Recommended)
-Copy the `.claude/skills/pedantic-engineer/` directory into your project's `.claude/skills/`
-folder (or into `~/.claude/skills/` for all projects). Claude Code discovers the `SKILL.md`
-via its YAML frontmatter and makes it invocable as `/pedantic-engineer`. The shipped
-`SKILL.md` is self-contained — no other files are required for it to work.
+### Option 1: Slash-command skills (Recommended)
+Copy the `.claude/skills/` directory (it holds `pedantic-engineer/`, `pedantic-pm/`, and
+`pedantic-team/`) into your project's `.claude/skills/` folder (or `~/.claude/skills/` for
+all projects). Claude Code discovers each `SKILL.md` via its YAML frontmatter, making
+`/pedantic-engineer`, `/pedantic-pm`, and `/pedantic-team` invocable. Each `SKILL.md` is
+self-contained — no other files are required for it to work.
 
 ### Option 2: CLAUDE.md project memory
 Place this repo (or just `CLAUDE.md`) in your project root. Claude Code auto-discovers

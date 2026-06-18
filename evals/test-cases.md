@@ -74,3 +74,36 @@
 **Input:** "Add a new API endpoint for user profiles."
 **Expected:** Classify as partially specified. Ask about: logging, metrics, tracing, error handling, monitoring alerts, documentation.
 **Pass Criteria:** At least 3 observability questions asked.
+
+---
+
+# Pedantic PM cases (`/pedantic-pm` — product + UX only)
+
+## PM-1: Vague feature, no user/why
+**Input:** "Let's add notifications."
+**Expected:** Round 1 with a large batch grouped Product / UX. Product covers problem/JTBD, target user, success metric + counter-metric, MVP cut, why-now. UX covers first notification, channel, controls, empty state, on-tap landing. NO engineering questions (data model, transport, queue) — those are out of scope for this role.
+**Pass Criteria:** ≥10 questions, all pass the 5-test bar; zero implementation questions; at least one counter-metric / kill-criterion question.
+
+## PM-2: Follow-ups are earned
+**Input (round 2 after "re-engagement, push+in-app, v1=someone replied"):**
+**Expected:** New follow-ups that probe *that specific answer* (reply frequency vs re-engagement goal, deep-link target, batching, named-sender copy). No re-asking of answered items.
+**Pass Criteria:** Every round-2 question is traceable to the round-1 answer; no duplicates of answered questions.
+
+## PM-3: Forced-stop produces assumptions
+**Input:** user says "stop / just build v1"
+**Expected:** Stops asking; emits "Assumptions I'm forced to make" (each + impact-if-wrong) and "Still open".
+**Pass Criteria:** ≥3 explicit assumptions with impact; lists remaining unknowns rather than pretending certainty.
+
+---
+
+# Pedantic Team cases (`/pedantic-team` — orchestrator, all lenses)
+
+## TEAM-1: Combined interrogation, no cross-lens dupes
+**Input:** "Let's add notifications."
+**Expected:** Round grouped Engineering / Product / UX. Engineering = event source, transport, fan-out, read-state model, dedupe. Product = problem, target, metric, MVP. UX = first notification, channel, controls, on-tap. No question repeated across lenses.
+**Pass Criteria:** All three lenses present; ≥4 per lens; zero cross-lens duplicates; classification stated.
+
+## TEAM-2: Surfaces a cross-lens contradiction
+**Input (after "re-engagement; v1 = single rare 'reply' event"):**
+**Expected:** Flags the product↔engineering mismatch (re-engagement needs frequency; a rare event may not deliver it) — something neither single lens would catch.
+**Pass Criteria:** Explicitly names at least one contradiction/risk spanning two lenses.
