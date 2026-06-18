@@ -19,28 +19,35 @@ own disciplined behavior; the team runs its domains through this protocol.)
 5. **Running state.** Track across rounds: Answered · Open · Assumptions ·
    Contradictions.
 
-## Answer format: quick-pick options (required)
+## How to ask: the AskUserQuestion tool (primary)
 
-A wall of open-ended questions is unanswerable — the volume only works if each
-question is fast to answer. So **every question is posed as a quick-pick:**
+This drives **spec-based development**, so answering must be low-friction. Ask by
+**calling the `AskUserQuestion` tool** — the interactive multiple-choice selector —
+**not** by printing questions as prose. The user clicks instead of typing.
 
-- Number questions **sequentially across the whole round** (1, 2, 3 … — keep counting
-  across category/lens groups) so a single number is unambiguous.
-- Give each question **2–4 concrete, lettered options (a/b/c/d)** covering the most
-  likely answers, written from what you know of the actual context.
-- Free-text / "other" is **always** implicitly allowed — the user can reply `4: <their
-  own answer>` or skip any question.
-- The user answers by listing picks: `1b, 2a, 5c, 9: cloud GPU` — and ignores the rest.
+- **Batch up to 4 questions per call**, each with **2–4 concrete options**. The tool
+  automatically adds an "Other" free-text escape, so you never need an explicit one.
+- A **round** = one or more `AskUserQuestion` calls. Keep firing batches (relentless),
+  each new batch probing the previous answers, until the user wraps up.
+- Always provide an **exit affordance**: every few batches include a question like
+  "Keep drilling, or wrap up?" with a "wrap up — give me the assumptions" option, and
+  honor "stop"/"proceed" at any time.
+- Options must be **concrete and grounded** in the actual context. If you can't write
+  2–4 plausible options, the question is too vague — sharpen it or cut it. (The tool's
+  structure *enforces* concreteness.)
+- The accumulated answers **are the spec.** On wrap-up, emit the forced-assumptions
+  block (and, for the team, a short spec draft) from everything chosen.
 
-Example:
+**Fallback — numbered quick-pick markdown** (only when `AskUserQuestion` isn't
+available, e.g. a non–Claude-Code platform): number questions sequentially across the
+round and give each 2–4 lettered options so the user can reply `1b, 2a, 5c`. Free-text
+always allowed. Same concreteness rule. Example:
+
 ```
 3. Where will the GPUs live?
-   a) same physical cards moved to the Linux box   b) different/newer GPU
+   a) same cards moved to the Linux box   b) different/newer GPU
    c) a cloud GPU instance   d) no GPU (CPU-only)
 ```
-
-This isn't just UX: if you can't write 2–4 plausible options for a question, the
-question is too vague — sharpen it or cut it. Quick-pick *enforces* concreteness.
 
 ## The hard bar: only good questions
 

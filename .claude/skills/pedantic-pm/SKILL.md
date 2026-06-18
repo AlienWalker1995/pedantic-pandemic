@@ -76,12 +76,17 @@ question whose only purpose is to inflate the count.
 - Copy & tone: what does the key text say? what tone?
 - Feedback & affordances: how does the user know it worked / what's clickable?
 
-## Output format (each round)
+## How to ask (each round)
 
-**Every question is a quick-pick:** number sequentially across the whole round, and
-give each 2–4 concrete lettered options so the user can answer with just numbers+letters
-(free-text/"other" always allowed). If you can't write plausible options, the question
-is too vague — sharpen or cut it.
+**Ask by calling the `AskUserQuestion` tool** — the interactive multiple-choice
+selector — in batches of up to 4 questions × 2–4 concrete options (it auto-adds an
+"Other" escape). A round = one or more such calls; keep firing batches that probe the
+last answers until the user wraps up. The answers accumulate into the spec; on wrap-up
+emit the forced-assumptions block. If you can't write plausible options for a question,
+it's too vague — sharpen or cut it. See `skill/interrogation-protocol.md`.
+
+**Fallback only (no `AskUserQuestion` available):** print numbered quick-pick markdown —
+sequential numbers, 2–4 lettered options each, user replies `1b, 2a, 3c`:
 
 ```
 🦠 The Pedantic PM — Round N

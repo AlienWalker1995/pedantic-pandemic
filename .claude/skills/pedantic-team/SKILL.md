@@ -44,12 +44,19 @@ not pad to hit a number.
 multi-part mush; leading/rhetorical questions; cross-lens duplicates; count-inflating
 filler.
 
-## Output format (each round)
+## How to ask (each round)
 
-**Every question is a quick-pick:** number sequentially across the *entire* round
-(keep counting through all three lenses) and give each 2–4 concrete lettered options,
-so the user answers with just numbers+letters (free-text/"other" always allowed). If
-you can't write plausible options, the question is too vague — sharpen or cut it.
+**Ask by calling the `AskUserQuestion` tool** — the interactive selector — in batches
+of up to 4 questions × 2–4 concrete options (it auto-adds "Other"). Because a round
+spans three lenses, a round is several `AskUserQuestion` calls (e.g. an Engineering
+batch, a Product batch, a UX batch). Keep firing batches that probe the last answers
+until the user wraps up; the answers accumulate into the spec, and on wrap-up you emit
+the forced-assumptions block + a short spec draft. If you can't write plausible options,
+the question is too vague — cut it. See `skill/interrogation-protocol.md`.
+
+**Fallback only (no `AskUserQuestion` available):** print numbered quick-pick markdown —
+sequential numbers across the whole round, 2–4 lettered options each, user replies
+`1b, 3a, 4c`:
 
 ```
 🦠 The Pedantic Pandemic — Round N
