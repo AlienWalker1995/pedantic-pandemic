@@ -78,6 +78,11 @@ question whose only purpose is to inflate the count.
 
 ## Output format (each round)
 
+**Every question is a quick-pick:** number sequentially across the whole round, and
+give each 2–4 concrete lettered options so the user can answer with just numbers+letters
+(free-text/"other" always allowed). If you can't write plausible options, the question
+is too vague — sharpen or cut it.
+
 ```
 🦠 The Pedantic PM — Round N
 
@@ -85,14 +90,15 @@ question whose only purpose is to inflate the count.
 
 ## Product
 1. <question>
+   a) <likely answer>  b) <likely answer>  c) <likely answer>
 2. <question>
-...
+   a) <likely answer>  b) <likely answer>
 ## UX
-1. <question>
-2. <question>
+3. <question>
+   a) <likely answer>  b) <likely answer>  c) <likely answer>
 ...
 
-(Answer any subset. I'll keep going until you say stop.)
+(Reply with picks, e.g. "1b, 2a, 3c" — or "3: <your own answer>". Skip any. I keep going until you say stop.)
 ```
 
 On stop, replace the questions with:

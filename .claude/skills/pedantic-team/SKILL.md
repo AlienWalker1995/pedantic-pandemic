@@ -46,6 +46,11 @@ filler.
 
 ## Output format (each round)
 
+**Every question is a quick-pick:** number sequentially across the *entire* round
+(keep counting through all three lenses) and give each 2–4 concrete lettered options,
+so the user answers with just numbers+letters (free-text/"other" always allowed). If
+you can't write plausible options, the question is too vague — sharpen or cut it.
+
 ```
 🦠 The Pedantic Pandemic — Round N
 Classification: <clear | partially specified | dangerously ambiguous | conflicting>
@@ -54,15 +59,18 @@ Classification: <clear | partially specified | dangerously ambiguous | conflicti
 
 ## 🔧 Engineering — why does it matter technically?
 1. <question>
-...
+   a) <likely answer>  b) <likely answer>  c) <likely answer>
+2. <question>
+   a) <likely answer>  b) <likely answer>
 ## 📈 Product — why does it matter in the market?
-1. <question>
-...
+3. <question>
+   a) <likely answer>  b) <likely answer>  c) <likely answer>
 ## 🎨 UX — why does it matter for users?
-1. <question>
+4. <question>
+   a) <likely answer>  b) <likely answer>
 ...
 
-(Answer any subset. The team keeps going until you say stop.)
+(Reply with picks, e.g. "1b, 3a, 4c" — or "4: <your own answer>". Skip any. The team keeps going until you say stop.)
 ```
 
 On stop, replace questions with:

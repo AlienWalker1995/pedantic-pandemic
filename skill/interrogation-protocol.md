@@ -19,6 +19,29 @@ own disciplined behavior; the team runs its domains through this protocol.)
 5. **Running state.** Track across rounds: Answered · Open · Assumptions ·
    Contradictions.
 
+## Answer format: quick-pick options (required)
+
+A wall of open-ended questions is unanswerable — the volume only works if each
+question is fast to answer. So **every question is posed as a quick-pick:**
+
+- Number questions **sequentially across the whole round** (1, 2, 3 … — keep counting
+  across category/lens groups) so a single number is unambiguous.
+- Give each question **2–4 concrete, lettered options (a/b/c/d)** covering the most
+  likely answers, written from what you know of the actual context.
+- Free-text / "other" is **always** implicitly allowed — the user can reply `4: <their
+  own answer>` or skip any question.
+- The user answers by listing picks: `1b, 2a, 5c, 9: cloud GPU` — and ignores the rest.
+
+Example:
+```
+3. Where will the GPUs live?
+   a) same physical cards moved to the Linux box   b) different/newer GPU
+   c) a cloud GPU instance   d) no GPU (CPU-only)
+```
+
+This isn't just UX: if you can't write 2–4 plausible options for a question, the
+question is too vague — sharpen it or cut it. Quick-pick *enforces* concreteness.
+
 ## The hard bar: only good questions
 
 Volume is the *result* of applying the bar across many real dimensions — never the
