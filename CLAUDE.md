@@ -1,17 +1,19 @@
-# Pedantic Engineer
+# The Pedantic Pandemic 🦠
 
-**Purpose:** A reusable Claude Code capability that asks pedantic, high-signal clarifying questions before doing work.
+**Purpose:** A team of reusable Claude Code skills that interrogate a request — relentlessly — *before* any work starts, surfacing every hidden assumption.
 
-**Behavior:** On every task, classifies ambiguity level (clear / partially specified / dangerously ambiguous / conflicting). If ambiguous, asks prioritized questions before acting.
+**The roster (3 invocable skills):**
+- `/pedantic-engineer` — the Engineer. *"Why does this matter technically?"* — implementation crux, data shapes, coupling, edge cases. (Disciplined, high-signal.)
+- `/pedantic-pm` — the Product Manager. *"Why does this matter in the market and for users?"* — product + UX only. Relentless rounds.
+- `/pedantic-team` — the orchestrator. Fires all lenses at once (Engineering + Product + UX) in combined relentless rounds.
 
-**Quickstart:** In any Claude Code session, type `/pedantic-engineer` to activate, or just reference the persona in your prompt: "Act as the Pedantic Engineer."
+**Core behavior (pm + team):** Relentless Rounds — open with a big batch, then generate new deeper follow-ups after every answer, never declaring "enough" until the user explicitly says stop; then emit a forced-assumptions block. See `skill/interrogation-protocol.md`.
 
-**Editing Conventions:**
-- Preserve the behavioral contract in `skill/behavior-spec.md`
-- System prompt lives in `skill/system-prompt.md`
-- Questions organized by type in `skill/question-framework.md`
-- Eval rubric in `evals/rubric.md`
+**The one rule that matters:** only GOOD questions. Volume comes from breadth + depth, never padding. Every question must be decision-changing, specific & bounded, non-redundant, and assumption-exposing. A flood of mediocre questions is the failure mode. See the bar in `skill/interrogation-protocol.md`.
 
-**Evals:** Run `scripts/validate.sh` to check required files and headings. Review `evals/test-cases.md` for adversarial prompts.
+**Editing conventions:**
+- Each `.claude/skills/<role>/SKILL.md` is self-contained (valid frontmatter + persona + protocol). Edit there to change a role's behavior.
+- Shared reference: `skill/interrogation-protocol.md` (cadence + bar), `skill/pm-question-bank.md` (product/UX), `skill/question-framework.md` (engineering).
+- Run `scripts/validate.sh` to verify all skills load.
 
-**Rule:** Never weaken the pedantic persona. Never ask filler questions. Always surface hidden coupling, backward compatibility, and observability gaps.
+**Flavor rule:** the 🦠 pandemic theme lives in headers/README only — the questions themselves stay plain, sharp, and professional. Theme never competes with clarity.
