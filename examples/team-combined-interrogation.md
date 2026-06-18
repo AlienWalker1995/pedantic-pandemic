@@ -5,58 +5,65 @@
 ---
 
 **🦠 The Pedantic Pandemic — Round 1**
-Classification: **dangerously ambiguous** (no user, no goal, no channel, no surface)
+Classification: **dangerously ambiguous** (no user, no goal, no channel, no technical surface)
 
-A feature with no reason, no user, and no technical surface named. The whole team has questions. Each lens asks only what it owns; nothing is duplicated across lenses.
+The whole team has questions. Quick-pick (`1b, 4a, 7c …`); free-text any with `N: …`. Each lens asks only what it owns — nothing duplicated across lenses.
 
 ## 🔧 Engineering — why does it matter technically?
-1. What event source fires a notification — is there already an events/activity stream, or does one need to be built?
-2. Delivery: are we integrating an existing push provider (APNs/FCM/web-push) or building transport? What's already in the stack?
-3. Fan-out shape: one event → how many recipients? Does this need a queue, or is synchronous send fine at current scale?
-4. What's the data model for "read/unread" state, and where does it live?
-5. Idempotency/dedupe: how do we guarantee a user isn't notified twice for the same event on retries?
+1. Does an event source for these notifications already exist?
+   a) yes, there's an activity/events stream to hook   b) no, it must be built   c) unsure
+2. Delivery transport?
+   a) integrate existing provider (APNs/FCM/web-push)   b) build transport   c) email only (SMTP)
+3. Fan-out scale per event?
+   a) 1:1 (just the actor)   b) 1:few   c) 1:many (needs a queue)
+4. Read/unread state lives where?
+   a) new table/store   b) existing user model   c) client-only
 
 ## 📈 Product — why does it matter in the market?
-6. What problem does this solve that users feel today? Painkiller or vitamin?
-7. Who's the first target user, and what single metric proves it worked?
-8. What's the thinnest v1 (one event type) that still tests demand?
-9. Why now, over the rest of the roadmap?
+5. Core job for the user?
+   a) re-engagement   b) time-sensitive alerts   c) reduce anxiety   d) drive an action
+6. Metric that proves it?
+   a) 7-day return rate   b) task completion   c) CTR
+7. Thinnest v1?
+   a) one event type, one channel   b) a few types   c) full prefs from day one
 
 ## 🎨 UX — why does it matter for users?
-10. What's the first notification a user ever gets, and what action should it drive?
-11. Which channel matters most for v1 — in-app, push, email?
-12. Empty state and per-type controls — all-or-nothing, or granular in v1?
-13. On tap, where does the user land?
+8. Channel for v1?
+   a) in-app   b) push   c) push + in-app   d) email
+9. On tap, land where?
+   a) the item in context   b) generic inbox   c) home
 
-*(Answer any subset. The team keeps going until you say stop.)*
+*(Reply with picks, or "stop"/"proceed" for the forced-assumptions block.)*
 
 ---
 
-**User:** "Re-engagement. Push + in-app. v1 = 'someone replied to you.'"
+**User:** `5a, 7a, 8c — and there's no reply feature yet`
 
 ---
 
 **🦠 The Pedantic Pandemic — Round 2**
-Classification: partially specified — **one contradiction surfaced** (see below)
+Classification: partially specified — **contradiction surfaced**
 
-⚠️ Contradiction: re-engagement goals usually need *high notification frequency*, but a single "reply" event may fire rarely — the engineering fan-out and the product goal may be mismatched. Probing that:
+⚠️ You chose re-engagement (5a) + thinnest v1 (7a), but "no event source yet" (1) means v1 must *also* build the event that triggers the notification — and a single new event may fire too rarely to move re-engagement. Probing that:
 
 ## 🔧 Engineering
-1. Does a "reply" event already exist in the system to hook, or is the reply feature itself not built yet? (Determines whether this is a 1-day or 3-week build.)
-2. For push, do we have device-token capture + a provider integration today, or is that net-new infra for v1?
+10. Given the event source is net-new, what's the v1 trigger?
+    a) reuse an existing action (e.g. mentions/likes) as the event   b) build a new event   c) defer until the source exists
+11. Device-token capture + provider integration today?
+    a) exists   b) net-new infra for v1   c) unsure
 
 ## 📈 Product
-3. What's the current daily reply volume per active user? If it's <1/week, will "someone replied" actually move re-engagement, or do we need more event types in v1?
-4. Baseline re-engagement rate today and the lift that makes this worth maintaining?
+12. If the trigger is rare, does re-engagement still hold as the goal?
+    a) yes, accept low frequency   b) add more event types to v1   c) switch goal to alerts (5b)
 
 ## 🎨 UX
-5. On tap, deep-link to the specific reply in context, or a generic inbox? (Biggest lever on the re-engagement metric.)
-6. Batching: 12 replies in an hour → 12 pushes, one batched, or a digest?
+13. Batching when many fire at once?
+    a) one push each   b) batched   c) digest
 
-*(Say "stop"/"proceed" for the forced-assumptions block.)*
+*(Picks, or "stop" for assumptions.)*
 
 ---
 
 This is the value: in two rounds the team exposed a **product↔engineering mismatch**
-(re-engagement needs frequency; the chosen event may be rare) that neither lens alone
-would have caught — before any code was written.
+(re-engagement needs frequency; the only available event is rare and net-new) that
+neither lens alone would have caught — before any code was written.
