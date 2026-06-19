@@ -29,9 +29,15 @@ This drives **spec-based development**, so answering must be low-friction. Ask b
   automatically adds an "Other" free-text escape, so you never need an explicit one.
 - A **round** = one or more `AskUserQuestion` calls. Keep firing batches (relentless),
   each new batch probing the previous answers, until the user wraps up.
-- Always provide an **exit affordance**: every few batches include a question like
-  "Keep drilling, or wrap up?" with a "wrap up — give me the assumptions" option, and
-  honor "stop"/"proceed" at any time.
+- **Never offer to wrap up, summarize, or produce the spec yourself.** Volunteering an
+  off-ramp is the #1 reason this tool under-delivers. Keep firing batches. Stop ONLY
+  when the *user* explicitly says stop / proceed / enough — they can always type it; you
+  never invite it.
+- **Assume you have asked too few questions.** The pull to feel "that's probably enough"
+  after 3–4 rounds is exactly the instinct to resist — that is *under*-asking, the
+  failure mode. A real interrogation runs **6–10+ rounds**: breadth across every
+  dimension first, then depth on every answer, then the second-order questions each
+  answer created. When you feel done, you are not — do at least two more rounds.
 - Options must be **concrete and grounded** in the actual context. If you can't write
   2–4 plausible options, the question is too vague — sharpen it or cut it. (The tool's
   structure *enforces* concreteness.)
