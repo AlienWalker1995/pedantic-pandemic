@@ -1,4 +1,4 @@
-# The Pedantic Pandemic 🦠
+# The Pedanticism
 
 **Purpose:** A team of reusable Claude Code skills that interrogate a request — relentlessly — *before* any work starts, surfacing every hidden assumption.
 
@@ -16,4 +16,4 @@
 - Shared reference: `skill/interrogation-protocol.md` (cadence + bar), `skill/pm-question-bank.md` (product/UX), `skill/question-framework.md` (engineering).
 - Run `scripts/validate.sh` to verify all skills load.
 
-**Flavor rule:** the 🦠 pandemic theme lives in headers/README only — the questions themselves stay plain, sharp, and professional. Theme never competes with clarity.
+**Flavor rule:** the house style lives in headers/README only — the questions themselves stay plain, sharp, and professional. Theme never competes with clarity.
