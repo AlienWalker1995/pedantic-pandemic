@@ -53,7 +53,7 @@ check_skill() {
 
 echo ""
 echo "--- Skill loadability (the part that actually matters) ---"
-for slug in pedantic-engineer pedantic-pm pedantic-team; do
+for slug in pedantic-pm pedantic-ux pedantic-frontend pedantic-engineer pedantic-devops pedantic-team; do
     check_skill "$slug"
 done
 
@@ -66,7 +66,7 @@ for f in overview decision-log assumptions design-principles usage-patterns; do
     check_file "docs/$f.md"
 done
 for f in system-prompt behavior-spec question-framework refusal-and-assumption-policy examples \
-         pm-question-bank interrogation-protocol; do
+         pm-question-bank ux-question-bank frontend-question-bank devops-question-bank interrogation-protocol; do
     check_file "skill/$f.md"
 done
 for f in rubric test-cases golden-examples; do

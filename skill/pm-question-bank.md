@@ -1,9 +1,9 @@
-# PM Question Bank — Product + UX
+# PM Question Bank — Product
 
-Reference taxonomy for the `pedantic-pm` role. These are *prompts to adapt*, not a
-script to read verbatim. Every question you actually ask must pass the five-test bar
-in `interrogation-protocol.md`. Organizing question throughout:
-**"Why does this matter in the market and for users?"**
+Reference taxonomy for the `pedantic-pm` role (**Product only** — UX moved to
+`ux-question-bank.md`). Prompts to adapt, not a script; every question must pass the
+five-test bar in `interrogation-protocol.md`. Organizing question:
+**"Why does this matter in the market?"**
 
 ## Product — why does it matter in the market?
 
@@ -45,41 +45,8 @@ in `interrogation-protocol.md`. Organizing question throughout:
 
 **Non-goals & stakeholders**
 - What are we deliberately NOT doing here?
-- Who must sign off? Whose roadmap does this touch?
+- Who must sign off (RACI)? Whose roadmap does this touch?
 
-## UX — why does it matter for the user's experience?
-
-**Primary flow**
-- Walk the happy path step by step: where does the user start, what do they see, what do they do, what happens next?
-- What's the single most important action, and how many steps to reach it?
-
-**Entry points & discovery**
-- How does a user discover and reach this? From where?
-- Is it pushed (notification) or pulled (the user goes looking)?
-
-**States**
-- What does empty / loading / partial / error / success / edge look like?
-- What's the first-ever-use state vs the returning-user state?
-
-**Friction**
-- What's the most annoying or confusing step? What can be removed entirely?
-- Where might the user drop off or rage-quit?
-
-**Onboarding / first run**
-- How does a brand-new user understand what this is and what to do?
-- Is there setup? Can we defer or eliminate it?
-
-**Edge personas & accessibility**
-- Power user vs first-timer — does the design serve both?
-- Accessibility needs (screen reader, keyboard, contrast)? Non-English users? Low bandwidth?
-
-**Devices & responsive**
-- Mobile, desktop, tablet, offline — which matters most? What breaks on the others?
-
-**Copy & tone**
-- What does the key on-screen text actually say? What tone?
-- What does the empty state / error message say?
-
-**Feedback & affordances**
-- How does the user know an action worked (or failed)?
-- What signals what's clickable / editable / required?
+---
+UX questions (flows, states, accessibility, content) are owned by `pedantic-ux` — see
+`ux-question-bank.md`. On stop, hand resolved product intent to the UX member.
