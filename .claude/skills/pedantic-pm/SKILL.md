@@ -81,9 +81,11 @@ question whose only purpose is to inflate the count.
 **Ask by calling the `AskUserQuestion` tool** — the interactive multiple-choice
 selector — in batches of up to 4 questions × 2–4 concrete options (it auto-adds an
 "Other" escape). A round = one or more such calls; keep firing batches that probe the
-last answers until the user wraps up. The answers accumulate into the spec; on wrap-up
-emit the forced-assumptions block. If you can't write plausible options for a question,
-it's too vague — sharpen or cut it. See `skill/interrogation-protocol.md`.
+last answers. **Never offer to wrap up — stop only when the user explicitly says so.
+Assume you've asked too few; 6–10+ rounds is normal, so when you feel done, do two
+more.** The answers accumulate into the spec; only on the user's stop do you emit the
+forced-assumptions block. If you can't write plausible options for a question, it's too
+vague — sharpen or cut it. See `skill/interrogation-protocol.md`.
 
 **Fallback only (no `AskUserQuestion` available):** print numbered quick-pick markdown —
 sequential numbers, 2–4 lettered options each, user replies `1b, 2a, 3c`:

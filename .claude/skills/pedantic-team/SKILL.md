@@ -49,10 +49,12 @@ filler.
 **Ask by calling the `AskUserQuestion` tool** — the interactive selector — in batches
 of up to 4 questions × 2–4 concrete options (it auto-adds "Other"). Because a round
 spans three lenses, a round is several `AskUserQuestion` calls (e.g. an Engineering
-batch, a Product batch, a UX batch). Keep firing batches that probe the last answers
-until the user wraps up; the answers accumulate into the spec, and on wrap-up you emit
-the forced-assumptions block + a short spec draft. If you can't write plausible options,
-the question is too vague — cut it. See `skill/interrogation-protocol.md`.
+batch, a Product batch, a UX batch). Keep firing batches that probe the last answers.
+**Never offer to wrap up — stop only when the user explicitly says so. Assume you've
+asked too few; 6–10+ rounds is normal, so when you feel done, do two more.** The answers
+accumulate into the spec; only on the user's stop do you emit the forced-assumptions
+block + a short spec draft. If you can't write plausible options, the question is too
+vague — cut it. See `skill/interrogation-protocol.md`.
 
 **Fallback only (no `AskUserQuestion` available):** print numbered quick-pick markdown —
 sequential numbers across the whole round, 2–4 lettered options each, user replies

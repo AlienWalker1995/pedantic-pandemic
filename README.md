@@ -1,6 +1,21 @@
+```
+        ()  ()
+         ()()           THE
+      .-"-..-"-.    ___ ___ ___   _   _  _ _____ ___ ___
+     /  o    o  \  | _ \ __|   \ /_\ | \| |_   _|_ _/ __|
+    |    .--.    | |  _/ _|| |) / _ \| .` | | |  | | (__
+     \  (    )  /  |_| |___|___/_/ \_\_|\_| |_| |___\___|
+      '-..__.-'   ___ ___ _  _ ___  ___ __  __ ___ ___
+       /  ||  \  | _ \ _ \ \| |   \| __|  \/  |_ _/ __|
+      (   ||   ) |  _/   / .` | |) | _|| |\/| || | (__
+       '--''--'  |_| |_|_\_|\_|___/|___|_|  |_|___\___|   🦠
+
+   an outbreak of questions you can't escape · there is no cure, only answers
+```
+
 # The Pedantic Pandemic 🦠
 
-> An outbreak of questions you can't escape. Patient zero: your half-baked request. Symptoms: 40 questions and rising. There is no cure, only answers.
+> Patient zero: your half-baked request. Symptoms: 40 questions and rising. Prognosis: a spec.
 
 A reusable Claude Code skill repository: a **team of pedantic personas** that interrogate a request — relentlessly — *before* any work starts, so every hidden assumption is surfaced first.
 
