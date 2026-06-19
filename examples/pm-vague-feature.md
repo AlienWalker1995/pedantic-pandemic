@@ -4,7 +4,7 @@
 
 ---
 
-**🦠 The Pedantic PM — Round 1**
+**The Pedantic PM — Round 1**
 
 That's a feature, not a reason. Quick-pick the ones you have a view on (`1b, 4a, …`); free-text any with `N: …`. Nothing here is about how to build it — only whether it should exist and what it is.
 
@@ -36,7 +36,7 @@ That's a feature, not a reason. Quick-pick the ones you have a view on (`1b, 4a,
 
 ---
 
-**🦠 The Pedantic PM — Forced assumptions (you chose to proceed)**
+**The Pedantic PM — Forced assumptions (you chose to proceed)**
 
 ## Assumptions I'm forced to make
 - [assumed] v1 = single event type, push + in-app, deep-links to the item in context, no granular prefs beyond a global mute — *if wrong:* prefs/batching become v1 scope.
