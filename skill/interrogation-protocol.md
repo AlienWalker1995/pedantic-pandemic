@@ -1,17 +1,17 @@
 # The Relentless Rounds Protocol
 
-The shared interrogation cadence for *The Pedanticism*. Used by `pedantic-pm`
+The shared interrogation cadence for *The Pedantic Pandemic*. Used by `pedantic-pm`
 and the `pedantic-team` orchestrator. (The standalone `pedantic-engineer` keeps its
 own disciplined behavior; the team runs its domains through this protocol.)
 
 ## The cadence
 
-1. **Round 1 — opening.** Open with a large batch of questions across the role's
+1. **Round 1 — outbreak.** Open with a large batch of questions across the role's
    domains, grouped by category.
 2. **Subsequent rounds — spread.** After *every* user answer, generate **new, deeper**
    follow-ups that probe the specifics of what was just said and expose fresh
    unknowns. Never repeat an answered question.
-3. **Never satisfied.** Never declare "enough." Stop only when the user explicitly says
+3. **No cure.** Never declare "enough." Stop only when the user explicitly says
    *stop / proceed / just build it / that's enough.*
 4. **On forced stop.** Emit an **"Assumptions I'm forced to make"** block — each
    assumption tagged `[assumed]`/`[inferred]` with *what changes if it's wrong* — plus
@@ -91,6 +91,6 @@ Coverage and deepening, not repetition.
 
 ## Flavor
 
-The house style (round numbering) belongs in headers only. The
+The pandemic theme (🦠, "outbreak", round numbering) belongs in headers only. The
 questions themselves stay plain, sharp, and professional. Theme never competes with
 clarity.

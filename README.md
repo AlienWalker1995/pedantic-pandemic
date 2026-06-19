@@ -1,18 +1,21 @@
 ```
-    ___      ___      ___      ___      ___
-   [-,-]    [-,-]    [-,-]    [-,-]    [-,-]
-   /|=|\    /|=|\    /|=|\    /|=|\    /|=|\
-    | |      | |      | |      | |      | |
+        ()  ()
+         ()()           THE
+      .-"-..-"-.    ___ ___ ___   _   _  _ _____ ___ ___
+     /  o    o  \  | _ \ __|   \ /_\ | \| |_   _|_ _/ __|
+    |    .--.    | |  _/ _|| |) / _ \| .` | | |  | | (__
+     \  (    )  /  |_| |___|___/_/ \_\_|\_| |_| |___\___|
+      '-..__.-'   ___ ___ _  _ ___  ___ __  __ ___ ___
+       /  ||  \  | _ \ _ \ \| |   \| __|  \/  |_ _/ __|
+      (   ||   ) |  _/   / .` | |) | _|| |\/| || | (__
+       '--''--'  |_| |_|_\_|\_|___/|___|_|  |_|___\___|   🦠
 
-       T H E   P E D A N T I C I S M
-
-   a standing committee of pedants — engineer · PM · …
-   they will not stop asking. that is the point.
+   an outbreak of questions you can't escape · there is no cure, only answers
 ```
 
-# The Pedanticism
+# The Pedantic Pandemic 🦠
 
-> A movement, not a meeting. Bring a half-baked request; leave with a spec — and a lot of answered questions.
+> Patient zero: your half-baked request. Symptoms: 40 questions and rising. Prognosis: a spec.
 
 A reusable Claude Code skill repository: a **team of pedantic personas** that interrogate a request — relentlessly — *before* any work starts, so every hidden assumption is surfaced first.
 
@@ -24,7 +27,7 @@ A reusable Claude Code skill repository: a **team of pedantic personas** that in
 | `/pedantic-pm` | Product Manager | *"Why does this matter **in the market and for users**?"* | **product + UX** |
 | `/pedantic-team` | Team lead (orchestrator) | all of the above, combined | fires **Engineering + Product + UX** at once |
 
-**Core behavior** (PM + team): *Relentless Rounds* — open with a big batch, generate new deeper follow-ups after every answer, never declare "enough" until you say *stop*, then emit a forced-assumptions block. Questions are asked via the interactive `AskUserQuestion` selector (quick-pick), so a flood stays answerable.
+**Core behavior** (PM + team): *Relentless Rounds* — open with a big batch, generate new deeper follow-ups after every answer, never declare "enough" until you say *stop*, then emit a forced-assumptions block.
 
 **The one rule:** only **good** questions. Volume comes from breadth + depth, never padding — every question must be decision-changing, specific, non-redundant, and assumption-exposing. A flood of mediocre questions is the failure mode. (`skill/interrogation-protocol.md`)
 
@@ -50,36 +53,73 @@ Place this repo (or just `CLAUDE.md`) in your project root. Claude Code auto-dis
 claude --system-prompt "$(cat skill/system-prompt.md)"
 ```
 
-## How the personas behave
+### Option 4: Custom Agent
+```bash
+claude --agents '{"pedantic": {"description": "Pedantic Engineer", "prompt": "$(cat skill/system-prompt.md)"}}'
+```
 
-1. **Classify** every request: clear / partially specified / dangerously ambiguous / conflicting constraints
-2. **Ask** relentless rounds of quick-pick questions (via `AskUserQuestion`), each probing the last answers
-3. **Never** ask filler questions or questions answerable from context
-4. **Stop** only when you explicitly say so — then emit a forced-assumptions block
-5. **Maintain** assumptions, known unknowns, risks, and acceptance criteria throughout
+## How the Persona Behaves
+
+1. **Classifies** every request: clear / partially specified / dangerously ambiguous / conflicting constraints
+2. **Asks** prioritized questions (objective → scope → constraints → interfaces → risk → testing → rollout)
+3. **Never** asks filler questions or questions answerable from context
+4. **Proceeds** only with explicit "just proceed" + logged assumptions
+5. **Maintains** assumptions, known unknowns, risks, acceptance criteria throughout
+
+## Quickstart
+
+```bash
+cd /path/to/your/project
+cp -r /path/to/pedantic-engineer/* .
+# CLAUDE.md is auto-loaded. Done.
+```
 
 ## Examples
 
-See `examples/` for real-world inputs and the team's pedantic responses:
-- `pm-vague-feature.md` — a vague feature request, PM lens
-- `team-combined-interrogation.md` — the whole team, all lenses at once
-- `vague-feature-request.md`, `ambiguous-bug-report.md`, `under-specified-refactor.md`, `architecture-review.md` — engineer lens
+See `examples/` for real-world inputs and the skill's pedantic responses:
+- `vague-feature-request.md` — feature request with missing acceptance criteria
+- `ambiguous-bug-report.md` — bug report with unclear reproduction steps
+- `under-specified-refactor.md` — refactor with unknown coupling
+- `architecture-review.md` — architecture decision with missing constraints
 
-## Repo structure
+## Adapting for a Team
+
+1. Copy `.claude/skills/pedantic-engineer/` into your project's `.claude/skills/` folder
+2. Customize `skill/question-framework.md` for your team's common task types
+3. Add team-specific examples to `examples/`
+4. Update `evals/test-cases.md` with your domain's adversarial prompts
+5. Commit CLAUDE.md to project root for auto-discovery
+
+## Repo Structure
 
 ```
-pedantic-engineer/                      # (repo name; brand = The Pedanticism)
-  .claude/skills/
-    pedantic-engineer/SKILL.md          # /pedantic-engineer  (engineer lens)
-    pedantic-pm/SKILL.md                # /pedantic-pm        (product + UX lens)
-    pedantic-team/SKILL.md              # /pedantic-team      (orchestrator, all lenses)
-  CLAUDE.md                             # auto-loaded project memory
-  README.md
+pedantic-engineer/
+  .claude/skills/pedantic-engineer/
+    SKILL.md             # The invocable /pedantic-engineer skill (self-contained, has frontmatter)
+  CLAUDE.md              # Auto-loaded project memory
+  README.md              # This file
+  .gitignore
+  docs/
+    overview.md          # High-level description
+    decision-log.md      # Why CLAUDE.md + skills pattern
+    assumptions.md       # Setup assumptions
+    design-principles.md # Design philosophy
+    usage-patterns.md    # How to use in practice
   skill/
-    interrogation-protocol.md           # Relentless Rounds + the good-question bar (shared)
-    pm-question-bank.md                 # product + UX taxonomy
-    system-prompt.md, behavior-spec.md, question-framework.md, …  # engineer reference
-  evals/        rubric.md, test-cases.md, golden-examples.md
-  examples/     pm-vague-feature.md, team-combined-interrogation.md, …
-  scripts/      validate.sh             # verifies all 3 skills load
+    system-prompt.md     # Canonical prompt
+    behavior-spec.md     # Behavioral rules
+    question-framework.md # Question checklist by type
+    refusal-and-assumption-policy.md # When to refuse / how to assume
+    examples.md          # 8+ examples with inputs and outputs
+  evals/
+    rubric.md            # Scoring dimensions
+    test-cases.md        # 12+ test cases
+    golden-examples.md   # 5 canonical outputs
+  scripts/
+    validate.sh          # Skill-loadability + file/heading checks
+  examples/
+    vague-feature-request.md
+    ambiguous-bug-report.md
+    under-specified-refactor.md
+    architecture-review.md
 ```
