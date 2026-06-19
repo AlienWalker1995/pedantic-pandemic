@@ -19,15 +19,20 @@
 
 A reusable Claude Code skill repository: a **team of pedantic personas** that interrogate a request — relentlessly — *before* any work starts, so every hidden assumption is surfaced first.
 
-## The roster
+## The roster — five members, asked in order
 
-| Skill | Role | Organizing question | Asks about |
-|---|---|---|---|
-| `/pedantic-engineer` | Engineer | *"Why does this matter **technically**?"* | implementation: data shapes, coupling, edge cases, backward-compat, testing, ops |
-| `/pedantic-pm` | Product Manager | *"Why does this matter **in the market and for users**?"* | **product + UX** |
-| `/pedantic-team` | Team lead (orchestrator) | all of the above, combined | fires **Engineering + Product + UX** at once |
+The team interrogates a request in flow order: **Product → UX → Frontend → Backend → DevOps.** Each phase informs the next.
 
-**Core behavior** (PM + team): *Relentless Rounds* — open with a big batch, generate new deeper follow-ups after every answer, never declare "enough" until you say *stop*, then emit a forced-assumptions block.
+| # | Skill | Role | Organizing question | Owns |
+|---|---|---|---|---|
+| 1 | `/pedantic-pm` | Product Manager | *"Why does this matter **in the market**?"* | problem/JTBD, segment, value, metrics, scope, prioritization, business model |
+| 2 | `/pedantic-ux` | UX Designer | *"How will the user **actually experience** this?"* | flows, IA, states, interaction, content, accessibility, responsiveness |
+| 3 | `/pedantic-frontend` | Frontend Engineer | *"Why does this matter **in the client**?"* | rendering, components, state, data-fetching, performance, a11y impl |
+| 4 | `/pedantic-engineer` | Backend / Core Engineer | *"Why does this matter **technically**?"* | data model, APIs, coupling, edge cases, security, backward-compat, testing |
+| 5 | `/pedantic-devops` | DevOps / SRE Engineer | *"How does it **ship & operate** reliably?"* | CI/CD, infra/IaC, config/secrets, scaling, reliability/SLOs, observability |
+| — | `/pedantic-team` | Team lead (orchestrator) | all of the above, in order | runs the five members Product → … → DevOps |
+
+**Core behavior:** *Relentless Rounds* via the interactive `AskUserQuestion` selector — open broad, generate new deeper follow-ups after every answer, never declare "enough" until you say *stop*, then emit a forced-assumptions block. Each member's parameters are detailed verbosely in its `SKILL.md` + companion `skill/*-question-bank.md`.
 
 **The one rule:** only **good** questions. Volume comes from breadth + depth, never padding — every question must be decision-changing, specific, non-redundant, and assumption-exposing. A flood of mediocre questions is the failure mode. (`skill/interrogation-protocol.md`)
 
@@ -38,11 +43,12 @@ A private, portable repo that packages prompt-based capabilities. Loaded into an
 ## How to Use with Claude Code
 
 ### Option 1: Slash-command skills (Recommended)
-Copy the `.claude/skills/` directory (it holds `pedantic-engineer/`, `pedantic-pm/`, and
-`pedantic-team/`) into your project's `.claude/skills/` folder (or `~/.claude/skills/` for
-all projects). Claude Code discovers each `SKILL.md` via its YAML frontmatter, making
-`/pedantic-engineer`, `/pedantic-pm`, and `/pedantic-team` invocable. Each `SKILL.md` is
-self-contained — no other files are required for it to work.
+Copy the `.claude/skills/` directory (it holds `pedantic-pm/`, `pedantic-ux/`,
+`pedantic-frontend/`, `pedantic-engineer/`, `pedantic-devops/`, and `pedantic-team/`)
+into your project's `.claude/skills/` folder (or `~/.claude/skills/` for all projects).
+Claude Code discovers each `SKILL.md` via its YAML frontmatter, making the six
+`/pedantic-*` commands invocable. Each `SKILL.md` is self-contained. Run
+`/pedantic-team` for the full ordered grilling, or a single member for one lens.
 
 ### Option 2: CLAUDE.md project memory
 Place this repo (or just `CLAUDE.md`) in your project root. Claude Code auto-discovers
