@@ -4,7 +4,7 @@
 
 ---
 
-**The Pedanticism — Round 1**
+**🦠 The Pedantic Pandemic — Round 1**
 Classification: **dangerously ambiguous** (no user, no goal, no channel, no technical surface)
 
 The whole team has questions. Quick-pick (`1b, 4a, 7c …`); free-text any with `N: …`. Each lens asks only what it owns — nothing duplicated across lenses.
@@ -41,7 +41,7 @@ The whole team has questions. Quick-pick (`1b, 4a, 7c …`); free-text any with 
 
 ---
 
-**The Pedanticism — Round 2**
+**🦠 The Pedantic Pandemic — Round 2**
 Classification: partially specified — **contradiction surfaced**
 
 ⚠️ You chose re-engagement (5a) + thinnest v1 (7a), but "no event source yet" (1) means v1 must *also* build the event that triggers the notification — and a single new event may fire too rarely to move re-engagement. Probing that:
