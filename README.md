@@ -36,6 +36,14 @@ The team interrogates a request in flow order: **Product → UX → Frontend →
 
 **The one rule:** only **good** questions. Volume comes from breadth + depth, never padding — every question must be decision-changing, specific, non-redundant, and assumption-exposing. A flood of mediocre questions is the failure mode. (`skill/interrogation-protocol.md`)
 
+## Why I made this
+
+Every team has that one person you can't actually fault. They ask the questions nobody else thought of — the ones that save you a week of rework three months later. And they're also, let's be honest, *a little exhausting*: the thing you figured was "just add a button" turns into forty questions about empty states, rollback plans, and who actually asked for this.
+
+You can't fault them. The questions are good. They're just relentless.
+
+**This is that person — bottled.** Five of them, actually, one per discipline. The Pedantic Pandemic takes the most useful annoying-coworker instinct (relentless, high-signal questioning) and points it at your half-baked request *before* you write a line of code. You can't fault the questions — they have to clear a strict "is this actually worth asking?" bar. And unlike the real coworker, you can tell it to stop the moment you've had enough.
+
 ## What This Is
 
 A private, portable repo that packages prompt-based capabilities. Loaded into any Claude Code session, the team surfaces ambiguity and sharpens a request before execution.
