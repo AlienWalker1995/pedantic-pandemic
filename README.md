@@ -72,6 +72,21 @@ claude --system-prompt "$(cat skill/system-prompt.md)"
 claude --agents '{"pedantic": {"description": "Pedantic Engineer", "prompt": "$(cat skill/system-prompt.md)"}}'
 ```
 
+## How to Use with Cursor
+
+The same six personas ship as **Cursor rules** under `.cursor/rules/*.mdc`
+(`pedantic-pm.mdc` … `pedantic-team.mdc`). Copy the `.cursor/` directory into your
+project root (or merge into an existing `.cursor/rules/`). Each is an **Agent
+Requested** rule (`alwaysApply: false`): Cursor reads the `description` and pulls the
+matching persona in when your task fits it, or you invoke one explicitly in chat
+(e.g. *"use the pedantic-pm rule"*). Cursor has no `AskUserQuestion` selector, so the
+personas fall back to the numbered quick-pick questions they already describe —
+behavior is otherwise identical.
+
+The Cursor rules are **generated from the Claude `SKILL.md` files** (single source of
+truth) by `scripts/sync-cursor.sh`; re-run it after editing any `SKILL.md`. Both
+runtimes are checked by `scripts/validate.sh`.
+
 ## How the Persona Behaves
 
 1. **Classifies** every request: clear / partially specified / dangerously ambiguous / conflicting constraints
@@ -107,9 +122,11 @@ See `examples/` for real-world inputs and the skill's pedantic responses:
 ## Repo Structure
 
 ```
-pedantic-engineer/
-  .claude/skills/pedantic-engineer/
-    SKILL.md             # The invocable /pedantic-engineer skill (self-contained, has frontmatter)
+pedantic-pandemic/
+  .claude/skills/<role>/
+    SKILL.md             # One per role (pm, ux, frontend, engineer, devops, team) — the invocable /pedantic-* skill
+  .cursor/rules/
+    pedantic-*.mdc       # The same six, generated for Cursor (Agent Requested rules)
   CLAUDE.md              # Auto-loaded project memory
   README.md              # This file
   .gitignore
@@ -130,7 +147,8 @@ pedantic-engineer/
     test-cases.md        # 12+ test cases
     golden-examples.md   # 5 canonical outputs
   scripts/
-    validate.sh          # Skill-loadability + file/heading checks
+    validate.sh          # Skill-loadability + file/heading checks (both runtimes)
+    sync-cursor.sh       # Generate .cursor/rules/*.mdc from the SKILL.md files
   examples/
     vague-feature-request.md
     ambiguous-bug-report.md

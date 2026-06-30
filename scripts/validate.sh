@@ -51,10 +51,36 @@ check_skill() {
     fi
 }
 
+# Cursor loads rules from .cursor/rules/*.mdc with YAML frontmatter (description +
+# alwaysApply). These are generated from the SKILL.md by scripts/sync-cursor.sh.
+check_cursor() {
+    local slug="$1"
+    local rule=".cursor/rules/$slug.mdc"
+    echo "• cursor: /$slug"
+    if [ ! -f "$rule" ]; then
+        fail "MISSING cursor rule: $rule — run scripts/sync-cursor.sh"; return
+    fi
+    ok "present: $rule"
+    if [ "$(head -n 1 "$rule")" = "---" ]; then
+        ok "$slug.mdc: frontmatter opens on line 1"
+    else
+        fail "$slug.mdc: does not start with '---' — Cursor will NOT load it"
+    fi
+    local fm; fm="$(awk 'NR>1 && /^---[[:space:]]*$/{exit} NR>1{print}' "$rule")"
+    echo "$fm" | grep -q '^description:[[:space:]]*\S' && ok "$slug.mdc: frontmatter has description:" || fail "$slug.mdc: frontmatter missing description:"
+    echo "$fm" | grep -qE '^alwaysApply:[[:space:]]*(true|false)' && ok "$slug.mdc: has alwaysApply:" || fail "$slug.mdc: missing alwaysApply:"
+}
+
 echo ""
 echo "--- Skill loadability (the part that actually matters) ---"
 for slug in pedantic-pm pedantic-ux pedantic-frontend pedantic-engineer pedantic-devops pedantic-team; do
     check_skill "$slug"
+done
+
+echo ""
+echo "--- Cursor rules (valid in Cursor too — .cursor/rules/*.mdc) ---"
+for slug in pedantic-pm pedantic-ux pedantic-frontend pedantic-engineer pedantic-devops pedantic-team; do
+    check_cursor "$slug"
 done
 
 echo ""
