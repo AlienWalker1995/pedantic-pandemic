@@ -154,4 +154,9 @@ pedantic-pandemic/
     ambiguous-bug-report.md
     under-specified-refactor.md
     architecture-review.md
+  LICENSE                  # MIT
 ```
+
+## License
+
+[MIT](LICENSE) © 2026 AlienWalker1995 — free to use, copy, modify, and distribute.
