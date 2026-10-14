@@ -8,10 +8,10 @@
 
 **Patient zero: your half-baked request. Symptoms: 40 questions and rising. Prognosis: a spec.**
 
-![Claude Code skills](https://img.shields.io/badge/Claude_Code-6_skills-d97757?style=flat-square)
-![Cursor rules](https://img.shields.io/badge/Cursor-6_rules-000000?style=flat-square)
+![Agent Skills](https://img.shields.io/badge/format-Agent_Skills_SKILL.md-d97757?style=flat-square)
+![Harnesses](https://img.shields.io/badge/runs_in-Claude_Code_·_Codex_·_Gemini_·_Cursor_·_Copilot_·_OpenCode_·_Hermes-000000?style=flat-square)
 ![Flow](https://img.shields.io/badge/flow-Product_→_UX_→_Frontend_→_Backend_→_DevOps-22c55e?style=flat-square)
-![Validated](https://img.shields.io/badge/scripts%2Fvalidate.sh-both_runtimes-6b7280?style=flat-square)
+![Validated](https://img.shields.io/badge/scripts%2Fvalidate.sh-portable_format-6b7280?style=flat-square)
 
 **[Install](#install) · [The roster](#the-roster) · [How it works](#how-it-works) · [Example](#example) · [FAQ](#faq) · [Repo layout](#repo-layout)**
 
@@ -21,7 +21,7 @@
 
 ---
 
-A set of Claude Code skills (and matching Cursor rules) that interrogate a request, relentlessly, **before** any work starts, so every hidden assumption surfaces while it is still cheap to change. Each persona owns one discipline, asks only questions that would change a decision, and keeps going until you say *stop*. Then it writes down the assumptions it was forced to make.
+Six portable agent skills that interrogate a request, relentlessly, **before** any work starts, so every hidden assumption surfaces while it is still cheap to change. Each persona owns one discipline, asks only questions that would change a decision, and keeps going until you say *stop*. Then it writes down the assumptions it was forced to make.
 
 ## Why I made this
 
@@ -33,20 +33,24 @@ You cannot fault them. The questions are good. They are just relentless.
 
 ## Install
 
-### Claude Code
-
 ```bash
 git clone https://github.com/AlienWalker1995/pedantic-pandemic.git
-mkdir -p ~/.claude/skills
-cp -r pedantic-pandemic/.claude/skills/pedantic-* ~/.claude/skills/        # every project
-# or: cp -r pedantic-pandemic/.claude/skills/pedantic-* <your-repo>/.claude/skills/   # one project
+cd pedantic-pandemic
+./install.sh all                      # every harness, for every project
+./install.sh agents --project ~/app   # or one harness, for one project
 ```
 
-Claude Code discovers each `SKILL.md` from its frontmatter, which gives you six commands. Run `/pedantic-team` for the full ordered grilling, or a single member for one lens. Each `SKILL.md` is self-contained.
+Each persona is a standard [Agent Skills](https://agentskills.io/specification) folder (`SKILL.md` with `name` and `description` frontmatter), so one copy works everywhere. The installer copies the six skills, plus the shared `skill/` reference docs they cite, into each target:
 
-### Cursor
+| Target | Folder | Harnesses |
+|---|---|---|
+| `agents` | `~/.agents/skills/` | Codex, Gemini CLI, Cursor, GitHub Copilot, OpenCode |
+| `claude` | `~/.claude/skills/` | Claude Code |
+| `hermes` | `~/.hermes/skills/` | Hermes |
 
-The same six personas ship as Cursor rules in `.cursor/rules/pedantic-*.mdc`. Copy them into your project's `.cursor/rules/`. Each is an *Agent Requested* rule (`alwaysApply: false`): Cursor pulls the matching persona in when your task fits, or you name one in chat ("use the pedantic-pm rule"). Cursor has no `AskUserQuestion` selector, so the personas fall back to the numbered quick-pick questions they already describe; behavior is otherwise identical.
+`--project DIR` installs into `DIR/.agents/skills` and `DIR/.claude/skills` instead, and `--dry-run` shows what would be copied. Re-running replaces each skill with a fresh copy.
+
+Run `/pedantic-team` for the full ordered grilling, or a single member for one lens. Harnesses without slash commands pick a persona up from its description when your task fits, or when you name it ("use pedantic-pm"). Where there is no interactive `AskUserQuestion` selector, the personas fall back to the numbered quick-pick questions they already describe; behavior is otherwise identical.
 
 ## The roster
 
@@ -103,19 +107,20 @@ More in [`examples/`](examples/): a vague feature request, an ambiguous bug repo
 
 **Is the pandemic theme in the questions?** No. The 🦠 flavor lives in headers and this README. The questions themselves stay plain, sharp, and professional.
 
-**How do I change a persona?** Edit its `.claude/skills/<role>/SKILL.md`, then run `scripts/sync-cursor.sh` to regenerate the Cursor rules and `scripts/validate.sh` to check both runtimes still load.
+**How do I change a persona?** Edit its `.claude/skills/<role>/SKILL.md`, run `scripts/validate.sh` to check it still meets the portable format, then re-run `./install.sh all`.
+
+**Why no Cursor `.mdc` rules?** Cursor loads Agent Skills directly, including from `.claude/skills`, so a second generated copy would only drift.
 
 ## Repo layout
 
 ```
 .claude/skills/<role>/SKILL.md   the six invocable /pedantic-* skills (single source of truth)
-.cursor/rules/pedantic-*.mdc     the same six, generated for Cursor by scripts/sync-cursor.sh
+install.sh                       copies the skills and skill/ into each harness's skills folder
 skill/                           shared protocol, per-member question banks, behavior and refusal policy
 examples/                        worked interrogations, one per scenario
 evals/                           rubric, test cases, and golden outputs for judging persona quality
 docs/                            overview, design principles, decision log, usage patterns
-scripts/validate.sh              skill-loadability and structure checks for both runtimes
-scripts/sync-cursor.sh           regenerates the Cursor rules from the SKILL.md files
+scripts/validate.sh              skill-loadability, portable-format, and structure checks
 CLAUDE.md                        editing conventions for working on this repo
 ```
 

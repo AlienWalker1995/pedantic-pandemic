@@ -1,5 +1,5 @@
 #!/bin/bash
-# validate.sh — Structural + skill-loadability checks for the pedantic-engineer repo.
+# validate.sh — Structural + skill-loadability checks for the Pedantic Pandemic repo.
 # Usage: bash scripts/validate.sh
 #
 # This goes beyond "file exists": it verifies the skill is actually loadable by
@@ -51,24 +51,35 @@ check_skill() {
     fi
 }
 
-# Cursor loads rules from .cursor/rules/*.mdc with YAML frontmatter (description +
-# alwaysApply). These are generated from the SKILL.md by scripts/sync-cursor.sh.
-check_cursor() {
+# Every other harness (Codex, Gemini CLI, Cursor, Copilot, OpenCode, Hermes)
+# reads the open Agent Skills format, which is stricter than Claude Code:
+# name must match the folder and ^[a-z0-9]+(-[a-z0-9]+)*$, description must be
+# 1-1024 characters, and the frontmatter must be valid YAML. An unquoted ": "
+# inside a plain scalar is a YAML error that strict parsers reject.
+check_portable() {
     local slug="$1"
-    local rule=".cursor/rules/$slug.mdc"
-    echo "• cursor: /$slug"
-    if [ ! -f "$rule" ]; then
-        fail "MISSING cursor rule: $rule — run scripts/sync-cursor.sh"; return
-    fi
-    ok "present: $rule"
-    if [ "$(head -n 1 "$rule")" = "---" ]; then
-        ok "$slug.mdc: frontmatter opens on line 1"
+    local skill=".claude/skills/$slug/SKILL.md"
+    [ -f "$skill" ] || return
+    echo "• portable: /$slug"
+    local fm; fm="$(awk 'NR>1 && /^---[[:space:]]*$/{exit} NR>1{print}' "$skill" | tr -d '\r')"
+    local name; name="$(echo "$fm" | sed -n 's/^name:[[:space:]]*//p')"
+    if [ "$name" = "$slug" ] && echo "$name" | grep -qE '^[a-z0-9]+(-[a-z0-9]+)*$'; then
+        ok "$slug: name matches folder and naming rule"
     else
-        fail "$slug.mdc: does not start with '---' — Cursor will NOT load it"
+        fail "$slug: name '$name' must equal the folder name and match ^[a-z0-9]+(-[a-z0-9]+)*$"
     fi
-    local fm; fm="$(awk 'NR>1 && /^---[[:space:]]*$/{exit} NR>1{print}' "$rule")"
-    echo "$fm" | grep -q '^description:[[:space:]]*\S' && ok "$slug.mdc: frontmatter has description:" || fail "$slug.mdc: frontmatter missing description:"
-    echo "$fm" | grep -qE '^alwaysApply:[[:space:]]*(true|false)' && ok "$slug.mdc: has alwaysApply:" || fail "$slug.mdc: missing alwaysApply:"
+    local desc; desc="$(echo "$fm" | sed -n 's/^description:[[:space:]]*//p')"
+    local desc_chars; desc_chars="$(printf '%s' "$desc" | wc -m | tr -d ' ')"
+    if [ "$desc_chars" -ge 1 ] && [ "$desc_chars" -le 1024 ]; then
+        ok "$slug: description is $desc_chars characters (limit 1024)"
+    else
+        fail "$slug: description is $desc_chars characters (must be 1-1024)"
+    fi
+    case "$desc" in
+        [\"\']*) ok "$slug: description is quoted" ;;
+        *": "*|*" #"*) fail "$slug: unquoted description contains ': ' or ' #' (invalid YAML)" ;;
+        *) ok "$slug: description is a valid plain YAML scalar" ;;
+    esac
 }
 
 echo ""
@@ -78,9 +89,9 @@ for slug in pedantic-pm pedantic-ux pedantic-frontend pedantic-engineer pedantic
 done
 
 echo ""
-echo "--- Cursor rules (valid in Cursor too — .cursor/rules/*.mdc) ---"
+echo "--- Portable Agent Skills format (Codex, Gemini CLI, Cursor, Copilot, OpenCode, Hermes) ---"
 for slug in pedantic-pm pedantic-ux pedantic-frontend pedantic-engineer pedantic-devops pedantic-team; do
-    check_cursor "$slug"
+    check_portable "$slug"
 done
 
 echo ""
@@ -88,6 +99,7 @@ echo "--- Supporting files ---"
 check_file "README.md"
 check_file "CLAUDE.md"
 check_file ".gitignore"
+check_file "install.sh"
 for f in overview decision-log assumptions design-principles usage-patterns; do
     check_file "docs/$f.md"
 done
