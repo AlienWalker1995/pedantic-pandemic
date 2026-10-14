@@ -1,75 +1,51 @@
 # Usage Patterns
 
-## Pattern 1: One-Shot Pedantic Review
+Install first with `./install.sh all` (see the README). In harnesses with slash commands, run a skill as `/pedantic-<role>`. Elsewhere, name it in chat ("use pedantic-pm") or describe the task and let the harness match the skill's description.
 
-**When:** You have a task description and want it reviewed before execution.
+## Pattern 1: Full team grilling
 
-**How:**
+**When:** A non-trivial feature or project is about to start.
+
 ```
-Act as the Pedantic Engineer. Review this task:
-[task description]
-```
-
-**Output:** The skill classifies the task, asks questions, and waits for answers.
-
-## Pattern 2: Iterative Clarification
-
-**When:** The task is complex and requires multiple rounds of clarification.
-
-**How:**
-```
-Act as the Pedantic Engineer. We're building [feature].
-[initial description]
+/pedantic-team Let's add notifications.
 ```
 
-After the skill asks questions, answer them. The skill maintains state across turns.
+The team runs Product, UX, Frontend, Backend, and DevOps in order, deduplicating questions across phases, until you say stop.
 
-## Pattern 3: Forced Proceed
+## Pattern 2: One lens
 
-**When:** You want to proceed despite ambiguity.
+**When:** Only one discipline is in doubt, such as a deploy change or a UI tweak.
 
-**How:**
 ```
-Just proceed.
-```
-
-**Output:** The skill lists its assumptions and proceeds with the task.
-
-## Pattern 4: Task-Specific Question Framework
-
-**When:** You want questions tailored to a specific task type.
-
-**How:**
-```
-Act as the Pedantic Engineer. This is a [new feature / bug fix / refactor / API design / architecture decision / migration / security review / prompt design] task.
-[task description]
+/pedantic-devops We're moving the worker to a cron schedule.
 ```
 
-The skill uses the relevant question framework from `skill/question-framework.md`.
+## Pattern 3: Answer and go deeper
 
-## Pattern 5: Output Contract Enforcement
+Answer with quick picks ("1b, 2a") or your own words ("2: only admins"). Every answer generates new, deeper follow-ups. Skip any question you do not want to answer.
 
-**When:** You need structured output for parsing or review.
+## Pattern 4: Stop and get the assumptions
 
-**How:**
+**When:** The remaining ambiguity is acceptable to you.
+
 ```
-Act as the Pedantic Engineer. Output in the standard 7-part contract:
-1. Problem restatement
-2. Ambiguities detected
-3. Pedantic questions
-4. Provisional assumptions
-5. Recommended plan
-6. Acceptance criteria
-7. Risks / edge cases
+stop
 ```
 
-## Pattern 6: Team Adoption
+Also accepted: *proceed*, *just build it*, *that's enough*. The skill replaces questions with the assumptions it is forced to make, the still-open items, and any contradictions, so nothing is silently guessed.
 
-**When:** A team wants to adopt the Pedantic Engineer.
+## Pattern 5: Structured engineering review
 
-**How:**
-1. Copy `skill/` directory into the team's project.
-2. Add `CLAUDE.md` to the project root.
-3. Customize `skill/question-framework.md` for team-specific task types.
-4. Add team-specific examples to `examples/`.
-5. Run `scripts/validate.sh` to verify.
+**When:** You want `pedantic-engineer`'s fixed output contract for a substantial task.
+
+```
+/pedantic-engineer Review this task and use the full output contract: [task description]
+```
+
+The contract has seven parts: problem restatement, ambiguities, questions, provisional assumptions, recommended plan, acceptance criteria, and risks.
+
+## Pattern 6: Team adoption
+
+1. Run `./install.sh all --project <your-repo>` and commit the installed `.agents/skills` and `.claude/skills` folders.
+2. To customize a persona, edit its `.claude/skills/<role>/SKILL.md` or the shared docs in `skill/` in this repo.
+3. Run `scripts/validate.sh`, then re-run the installer.

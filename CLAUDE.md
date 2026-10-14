@@ -1,6 +1,6 @@
 # The Pedantic Pandemic 🦠
 
-**Purpose:** A team of reusable Claude Code skills that interrogate a request — relentlessly — *before* any work starts, surfacing every hidden assumption.
+**Purpose:** A team of portable agent skills (Agent Skills `SKILL.md` format: Claude Code, Codex, Gemini CLI, Cursor, Copilot, OpenCode, Hermes) that interrogate a request — relentlessly — *before* any work starts, surfacing every hidden assumption.
 
 **The roster (6 invocable skills) — asked in flow order Product → UX → Frontend → Backend → DevOps:**
 - `/pedantic-pm` — Product Manager. *"Why does this matter in the market?"* — problem/JTBD, segment, metrics, scope, business model. (First.)
@@ -17,6 +17,7 @@
 **Editing conventions:**
 - Each `.claude/skills/<role>/SKILL.md` is self-contained (valid frontmatter + persona + protocol). Edit there to change a role's behavior.
 - Shared reference: `skill/interrogation-protocol.md` (cadence + bar) and per-member banks: `pm-question-bank.md` (product), `ux-question-bank.md`, `frontend-question-bank.md`, `question-framework.md` (backend), `devops-question-bank.md`.
-- Run `scripts/validate.sh` to verify all skills load.
+- Keep frontmatter valid for strict YAML parsers: `name` equals the folder name, `description` is one line of at most 1024 characters with no unquoted `: `.
+- Run `scripts/validate.sh` to verify all skills load and meet the portable format; `./install.sh all` installs them into every harness.
 
 **Flavor rule:** the 🦠 pandemic theme lives in headers/README only — the questions themselves stay plain, sharp, and professional. Theme never competes with clarity.

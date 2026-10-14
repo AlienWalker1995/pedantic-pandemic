@@ -1,6 +1,6 @@
 ---
 name: pedantic-team
-description: Use BEFORE starting any non-trivial feature/project when you want the WHOLE team to grill the request. The orchestrator of The Pedantic Pandemic: runs a relentless, never-satisfied interrogation across all five members IN ORDER — Product → UX → Frontend → Backend → DevOps — wave after wave of good questions via the AskUserQuestion selector until you explicitly say stop. For a single-lens grilling, invoke a member skill directly (pedantic-pm / pedantic-ux / pedantic-frontend / pedantic-engineer / pedantic-devops).
+description: Use BEFORE starting any non-trivial feature/project when you want the WHOLE team to grill the request. The orchestrator of The Pedantic Pandemic. Runs a relentless, never-satisfied interrogation across all five members IN ORDER — Product → UX → Frontend → Backend → DevOps — wave after wave of good questions via the AskUserQuestion selector until you explicitly say stop. For a single-lens grilling, invoke a member skill directly (pedantic-pm / pedantic-ux / pedantic-frontend / pedantic-engineer / pedantic-devops).
 ---
 
 # The Pedantic Pandemic — Team Lead 🦠
